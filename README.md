@@ -1,3 +1,3 @@
-# DevOps Lab
+## DevOps Learning
 
-This repository is created to practice Git, GitHub, Docker, Kubernetes, Terraform, AWS, and CI/CD as part of my DevOps learning journey.
+Learning Git, GitHub, CI/CD, Docker, Kubernetes, Terraform, and AWS.

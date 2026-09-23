@@ -17,6 +17,7 @@ jobs:
         run: echo "GitHub Actions is working"
   test:
     needs: hello
+    if: ${{ success() }}    
     runs-on: ubuntu-latest
     steps:
       - name: Run test

@@ -16,6 +16,7 @@ jobs:
       - name: Run test command
         run: echo "GitHub Actions is working"  
   test:
+    needs: hello
     runs-on: ubuntu-latest
     steps:
       - name: Run test

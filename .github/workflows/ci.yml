@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Set build version
         id: version
-        run: echo "build_version=1.0.0" >> "$GITHUB_OUTPUT"  
+        run: echo "build_version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT" 
       - name: Create build artifact
         run: echo "This is my build output" > build.txt  
       - name: Upload build artifact

@@ -2,8 +2,4 @@
 
 Learning Git, GitHub, CI/CD, Docker, Kubernetes, Terraform, and AWS.
 
-Main branch work
-Squash merge practice - change 3
-Squash merge practice - change 5
-rebase and merge - 1
-rebase and merge - 2
+GitHub Actions environment protection testing.

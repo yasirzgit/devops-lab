@@ -13,6 +13,7 @@ env:
 
 jobs:
   hello:
+    environment: development
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

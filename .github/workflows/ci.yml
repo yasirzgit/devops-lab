@@ -1,0 +1,123 @@
+name: CI
+
+on: 
+  push: 
+    branches: [feature/github-actions-basics]
+  pull_request: 
+    branches: [main]
+
+  workflow_dispatch:
+
+env:
+  APP_ENV: dev
+
+jobs:
+  hello:
+    environment: development
+    outputs:
+      build_version: ${{ steps.version.outputs.build_version }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set build version
+        id: version
+        run: echo "build_version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT" 
+      - name: Show expression values
+        run: |
+          echo "Run number: ${{ github.run_number }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Actor: ${{ github.actor }}"  
+      - name: Show event context
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Head branch: ${{ github.head_ref }}"
+          echo "Base branch: ${{ github.base_ref }}"    
+      - name: Create build artifact
+        run: echo "This is my build output" > build.txt  
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build.txt  
+          retention-days: 7
+      - name: Run test command
+        run: echo "GitHub Actions is working"
+      - name: Show workflow variable
+        run: echo "Environment is $APP_ENV"
+      - name: Show repository
+        run: echo "Repository is $GITHUB_REPOSITORY"    
+      - name: Show commit SHA
+        run: echo "Commit is $GITHUB_SHA"         
+      - name: Show Git ref
+        run: echo "Git ref is $GITHUB_REF" 
+      - name: Use secret
+        env:
+          DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
+        run:  |
+          if [ -n "$DEMO_TOKEN" ]; then
+            echo "Secret is available"
+          else
+            echo "Secret is missing"
+            exit 1
+          fi 
+      - name: Show repository variable
+        env:
+          DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
+        run: echo "Deploy environment is $DEPLOY_ENV"
+      - name: Show environment variable
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+        run: echo "App URL is $APP_URL" 
+      - name: Check environment secret
+        env:
+          DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
+        run: |
+          if [ -n "$DEV_TOKEN" ]; then
+            echo "Environment secret is available"
+          else
+            echo "Environment secret is missing"
+            exit 1
+          fi 
+  test:
+    needs: hello
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test
+        run: echo "This is the push or PR test job"
+        
+  deploy:
+    needs: test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy application
+        run: echo "Deploying application to production"
+
+  pat-test:
+    needs: hello
+    runs-on: ubuntu-latest
+    environment: pat
+    steps:
+      - name: Test PAT approval
+        run: echo "PAT deployment approved"     
+
+  artifact-test:
+    needs: hello
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: downloaded-artifact
+
+      - name: Verify artifact
+        run: cat downloaded-artifact/build.txt   
+      - name: Show build version
+        run: echo "Build version is ${{ needs.hello.outputs.build_version }}"      

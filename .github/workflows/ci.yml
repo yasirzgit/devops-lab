@@ -28,6 +28,13 @@ jobs:
           echo "Run number: ${{ github.run_number }}"
           echo "Workflow: ${{ github.workflow }}"
           echo "Actor: ${{ github.actor }}"  
+      - name: Show event context
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Head branch: ${{ github.head_ref }}"
+          echo "Base branch: ${{ github.base_ref }}"    
       - name: Create build artifact
         run: echo "This is my build output" > build.txt  
       - name: Upload build artifact

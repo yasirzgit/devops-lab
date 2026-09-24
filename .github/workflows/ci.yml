@@ -88,6 +88,15 @@ jobs:
     steps:
       - name: Run test
         run: echo "This is the push or PR test job"
+        
+  deploy:
+    needs: test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy application
+        run: echo "Deploying application to production"
 
   pat-test:
     needs: hello

@@ -37,6 +37,10 @@ jobs:
             echo "Secret is missing"
             exit 1
           fi 
+      - name: Show repository variable
+        env:
+          DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
+        run: echo "Deploy environment is $DEPLOY_ENV"
   test:
     needs: hello
     if: ${{ github.ref == 'refs/heads/main' }}   

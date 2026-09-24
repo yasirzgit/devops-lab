@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run test
-        run: echo "This is the test job"    
+        run: echo "This is the push test job"    
 
   pat-test:
     needs: hello

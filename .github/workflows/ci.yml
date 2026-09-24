@@ -25,6 +25,7 @@ jobs:
         with:
           name: build-output
           path: build.txt  
+          retention-days: 7
       - name: Run test command
         run: echo "GitHub Actions is working"
       - name: Show workflow variable
@@ -78,7 +79,7 @@ jobs:
     steps:
       - name: Test PAT approval
         run: echo "PAT deployment approved"     
-        
+
   artifact-test:
     needs: hello
     runs-on: ubuntu-latest

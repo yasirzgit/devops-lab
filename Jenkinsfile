@@ -14,7 +14,7 @@ pipeline {
                     credentialsId: 'demo-secret',
                     variable: 'DEMO_SECRET'
                 )]) {
-                    echo "Credential is available: ${DEMO_SECRET}"
+                    bat 'echo Credential is available: %DEMO_SECRET%'
                 }
             }
         }

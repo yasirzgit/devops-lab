@@ -29,7 +29,7 @@ jobs:
         run: echo "Git ref is $GITHUB_REF" 
       - name: Use secret
         env:
-          DEMO_TOKEN: ${{ secrets.DOES_NOT_EXIST }}
+          DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
         run:  |
           if [ -n "$DEMO_TOKEN" ]; then
             echo "Secret is available"

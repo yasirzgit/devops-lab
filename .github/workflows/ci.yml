@@ -14,10 +14,15 @@ env:
 jobs:
   hello:
     environment: development
+    outputs:
+      build_version: ${{ steps.version.outputs.build_version }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Set build version
+        id: version
+        run: echo "build_version=1.0.0" >> "$GITHUB_OUTPUT"  
       - name: Create build artifact
         run: echo "This is my build output" > build.txt  
       - name: Upload build artifact
@@ -92,4 +97,6 @@ jobs:
           path: downloaded-artifact
 
       - name: Verify artifact
-        run: cat downloaded-artifact/build.txt       
+        run: cat downloaded-artifact/build.txt   
+      - name: Show build version
+        run: echo "Build version is ${{ needs.hello.outputs.build_version }}"      

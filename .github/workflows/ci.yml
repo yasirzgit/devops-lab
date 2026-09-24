@@ -63,3 +63,11 @@ jobs:
     steps:
       - name: Run test
         run: echo "This is the test job"    
+
+  pat-test:
+    needs: hello
+    runs-on: ubuntu-latest
+    environment: pat
+    steps:
+      - name: Test PAT approval
+        run: echo "PAT deployment approved"      

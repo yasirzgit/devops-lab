@@ -42,6 +42,10 @@ jobs:
         env:
           DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
         run: echo "Deploy environment is $DEPLOY_ENV"
+      - name: Show environment variable
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+        run: echo "App URL is $APP_URL"  
   test:
     needs: hello
     if: ${{ github.ref == 'refs/heads/main' }}   

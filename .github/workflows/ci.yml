@@ -77,4 +77,18 @@ jobs:
     environment: pat
     steps:
       - name: Test PAT approval
-        run: echo "PAT deployment approved"      
+        run: echo "PAT deployment approved"     
+        
+  artifact-test:
+    needs: hello
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: downloaded-artifact
+
+      - name: Verify artifact
+        run: cat downloaded-artifact/build.txt       

@@ -18,6 +18,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Create build artifact
+        run: echo "This is my build output" > build.txt  
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build.txt  
       - name: Run test command
         run: echo "GitHub Actions is working"
       - name: Show workflow variable

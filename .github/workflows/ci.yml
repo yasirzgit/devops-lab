@@ -83,11 +83,11 @@ jobs:
           fi 
   test:
     needs: hello
-    if: ${{ github.event_name == 'push' }}   
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - name: Run test
-        run: echo "This is the push test job"    
+        run: echo "This is the push or PR test job"
 
   pat-test:
     needs: hello

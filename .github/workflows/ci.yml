@@ -23,6 +23,11 @@ jobs:
       - name: Set build version
         id: version
         run: echo "build_version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT" 
+      - name: Show expression values
+        run: |
+          echo "Run number: ${{ github.run_number }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Actor: ${{ github.actor }}"  
       - name: Create build artifact
         run: echo "This is my build output" > build.txt  
       - name: Upload build artifact

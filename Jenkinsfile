@@ -8,14 +8,9 @@ pipeline {
             }
         }
 
-        stage('Use Credential') {
+        stage('Deploy') {
             steps {
-                withCredentials([string(
-                    credentialsId: 'demo-secret',
-                    variable: 'DEMO_SECRET'
-                )]) {
-                    bat 'echo Credential is available: %DEMO_SECRET%'
-                }
+                echo "Deploying to ${params.ENVIRONMENT}"
             }
         }
 

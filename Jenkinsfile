@@ -9,6 +9,12 @@ pipeline {
         }
 
         stage('Deploy') {
+            when {
+                expression {
+                    params.ENVIRONMENT == 'prod'
+                }
+            }
+
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
             }

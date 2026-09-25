@@ -1,10 +1,14 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = 'devops-demo'
+    }
+
     stages {
         stage('Build') {
             steps {
-                echo 'Hello from Jenkins Pipeline'
+                echo "Building ${APP_NAME}"
             }
         }
 
@@ -16,13 +20,13 @@ pipeline {
             }
 
             steps {
-                echo "Deploying to ${params.ENVIRONMENT}"
+                echo "Deploying ${APP_NAME} to ${params.ENVIRONMENT}"
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests'
+                echo "Testing ${APP_NAME}"
             }
         }
     }
